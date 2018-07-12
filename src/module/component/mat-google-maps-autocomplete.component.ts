@@ -23,6 +23,34 @@ export enum Appearance {
   styleUrls: ['./mat-google-maps-autocomplete.component.scss']
 })
 export class MatGoogleMapsAutocompleteComponent implements OnInit {
+<mat-form-field class="full-width" [appearance]="appearance">
+  <mat-label>{{}}</mat-label>
+  <input matInput
+         [(ngModel)]="address"
+         (change)="onQuery($event)"
+         placeholder=""
+         class="form-control"
+         #search
+         MatValidateAddress
+         required>
+  <mat-error *ngIf="addressSearchControl.hasError('required')">
+    {{}} 
+  </mat-error>
+  <mat-error *ngIf="addressSearchControl.hasError('validateAddress')">
+   {{invalidErrorText
+   }} 
+  </mat-error>
+</mat-form-field>
+
+
+  @Input()
+  addressLabelText: string = 'Address';
+  @Input()
+  placeholderText: string = 'Please enter the address';
+  @Input()
+  requiredErrorText: string = 'The address is <strong>required</strong>';
+  @Input()
+  invalidErrorText: string = 'The address is <strong>not valid</strong>';
 
   @ViewChild('search')
   public searchElementRef: ElementRef;
